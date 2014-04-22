@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Site Admin</title>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc10.min.js"></script>
+</head>
+
+<body>
+
+	<button id="login"></button>
+	<hr>
+
+	<div id="site">
+		Theme: <select id="themes"><option selected disabled></option></select><br>
+		Header: <textarea id="theme-header"></textarea><br>
+		Footer: <textarea id="theme-footer"></textarea><br>
+		<button id="update-theme">Update theme</button>
+	</div>
+
+	<hr>
+
+	<div id="post">
+		Select a post: <select id="posts"><option selected disabled></option></select><br>
+		Title: <input type="text" id="title"><br>
+		<textarea id="data"></textarea>
+		<button id="upload-button">Update</button>
+		<div id="results"></div>
+	</div>
+
+	<script src="script.js"></script>
+
+	<script>
+	(function() {
+		var po = document.createElement('script'); po.async = true;
+		po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+	function render() {
+		gapi.signin.render('login');
+	}
+    </script>
+
+</body>
+</html>
