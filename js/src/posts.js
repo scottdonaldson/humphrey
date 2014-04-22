@@ -91,8 +91,15 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		var header = Humphrey.SITE.activeThemeHeader,
 			footer = Humphrey.SITE.activeThemeFooter;
 
+		var filterData = { 
+			title: title.value,
+			date: Humphrey.UTILS.formatDate(new Date())
+		};
+
 		// Set title
-		header = header.replace(/{{ title }}/, title.value);
+		header = Humphrey.filterContent(header, filterData);
+		content = Humphrey.filterContent(content, filterData);
+		footer = Humphrey.filterContent(footer, filterData);
 
 		params = {
 			Body: header + content + footer,

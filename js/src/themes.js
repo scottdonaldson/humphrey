@@ -98,9 +98,8 @@ Humphrey.DOM.updateThemeButton = document.getElementById('update-theme');
 		// Update all posts
 		Humphrey.S3.listObjects({ Prefix: 'posts/' }, function(err, data) {
 
-			for (var i = 0; i < data.Contents.length; i++) {
-				
-				var item = data.Contents[i];
+			if (!data.Contents) data.Contents = [];
+			data.Contents.forEach(function(item){
 
 				// Ignore posts/ directory (Size 0)
 				if ( item.Size > 0 ) {
@@ -116,8 +115,15 @@ Humphrey.DOM.updateThemeButton = document.getElementById('update-theme');
 								content = file.content,
 								slug = item.Key.replace(/^posts\/|.json$/g, '');
 
+							var filterData = { 
+								title: title,
+								date: Humphrey.UTILS.formatDate(new Date())
+							};
+
 							// Set title
-							header = header.replace(/{{ title }}/, title);
+							header = Humphrey.filterContent(header, filterData);
+							content = Humphrey.filterContent(content, filterData);
+							footer = Humphrey.filterContent(footer, filterData);
 
 							Humphrey.UTILS.notify('Updating post: ' + title + '.', true);
 
@@ -130,7 +136,7 @@ Humphrey.DOM.updateThemeButton = document.getElementById('update-theme');
 						}
 					});
 				}
-			}
+			});
 		});
 	};
 
