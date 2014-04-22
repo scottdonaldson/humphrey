@@ -3,12 +3,18 @@
 
 <head>
 	<title>Site Admin</title>
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc10.min.js"></script>
 </head>
 
 <body>
 
-	<button id="login"></button>
+	<span id="login-container"><span
+		id="login"
+	    class="g-signin"
+	    data-callback="loginToGoogle"
+	    data-cookiepolicy="single_host_origin"
+	    data-requestvisibleactions="http://schemas.google.com/AddActivity"
+	    data-scope="https://www.googleapis.com/auth/plus.login">
+	</span></span>
 	<hr>
 
 	<div id="site">
@@ -25,21 +31,18 @@
 		Title: <input type="text" id="title"><br>
 		<textarea id="data"></textarea>
 		<button id="upload-button">Update</button>
-		<div id="results"></div>
 	</div>
 
-	<script src="script.js"></script>
+	<hr>
 
-	<script>
-	(function() {
-		var po = document.createElement('script'); po.async = true;
-		po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-	})();
-	function render() {
-		gapi.signin.render('login');
-	}
-    </script>
+	<div id="notifications"></div>
+
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc10.min.js"></script>
+	<script src="js/src/init.js"></script>
+	<script src="js/src/utils.js"></script>
+	<script src="js/src/login.js"></script>
+	<script src="js/src/themes.js"></script>
+	<script src="js/src/posts.js"></script>
 
 </body>
 </html>
