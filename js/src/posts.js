@@ -1,6 +1,7 @@
 Humphrey.DOM.posts = document.getElementById('posts');
 Humphrey.DOM.title = document.getElementById('title');
 Humphrey.DOM.textarea = document.getElementById('data');
+Humphrey.DOM.file = document.getElementById('file');
 Humphrey.DOM.button = document.getElementById('upload-button');
 
 (function(d){
@@ -62,23 +63,21 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		});
 	}
 
-	Humphrey.updatePost = function() {
-		Humphrey.UTILS.notify('');
+	Humphrey.updatePostJSON = function() {
 
-		var content = d.textarea.value;
-
-		// If there is no ACTIVE_KEY, assume we are creating a new post
-		Humphrey.SITE.activePost = 
-			!Humphrey.SITE.activePost ? 
-				Humphrey.UTILS.slugify(title.value) : 
-				Humphrey.SITE.activePost;
+		var slug = Humphrey.UTILS.slugify(d.title),
+			title = d.title.value,
+			content = d.textarea.value,
+			media = d.file.files ? d.file.files[0].name : false;
 
 		// Update data
 		var params = { 
-			Key: 'posts/' + Humphrey.SITE.activePost + '.json',
+			Key: 'posts/' + slug + '.json',
+			ContentType: 'application/json',
 			Body: JSON.stringify({ 
 				content: content,
-				title: title.value,
+				title: title,
+				media: media,
 				updated: new Date()
 			})
 		};
@@ -86,6 +85,28 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		Humphrey.S3.putObject(params, function (err, data) {
 			Humphrey.UTILS.notify(err ? 'DATA ERROR!' : 'DATA SAVED.', true);
 		});
+	}
+
+	Humphrey.renderPost = function(data) {
+
+	}
+
+	Humphrey.updatePost = function() {
+		Humphrey.UTILS.notify('');
+
+		var content = d.textarea.value;
+
+		// If there is no ACTIVE_KEY, assume we are creating a new post
+		var slug = 
+			!Humphrey.SITE.activePost ? 
+				Humphrey.UTILS.slugify(d.title.value) : 
+				Humphrey.SITE.activePost;
+
+		var file = d.file.files ? d.file.files[0] : false;
+
+		if (file) Humphrey.addMedia(file);
+
+		Humphrey.updatePostJSON();
 
 		// Update live post
 		var header = Humphrey.SITE.activeThemeHeader,
@@ -104,7 +125,7 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		params = {
 			Body: header + content + footer,
 			ContentType: 'text/html',
-			Key: 'site/' + Humphrey.SITE.activePost + '/index.html'
+			Key: 'site/' + slug + '/index.html'
 		};
 
 		Humphrey.S3.putObject(params, function (err, data) {

@@ -1,3 +1,7 @@
+Humphrey.loadTemplate = function() {
+	
+}
+
 Humphrey.filterContent = function(content, data) {
 
 	// match all content to be replaced
@@ -21,5 +25,3 @@ Humphrey.filterContent = function(content, data) {
 
 	return content;
 }
-
-Humphrey.filterContent('Lorem ipsum dolor sit {{ amet }}, consectetur adipisicing elit. Id, officiis, aliquid, in accusantium similique rerum {{repellendus sunt suscipit}} quae assumenda blanditiis laudantium temporibus alias reiciendis laborum voluptas magnam eligendi ipsa.')

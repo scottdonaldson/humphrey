@@ -1,5 +1,7 @@
 Humphrey.DOM.notifications = document.getElementById('notifications');
 
+window.noop = function(){};
+
 Humphrey.UTILS.slugify = function(string) {
 	return string.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase().replace(/--+/g, '-')
 };
