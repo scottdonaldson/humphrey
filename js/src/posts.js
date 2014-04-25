@@ -1,4 +1,7 @@
 Humphrey.DOM.posts = document.getElementById('posts');
+Humphrey.DOM.addNewButton = document.getElementById('post-add-new');
+
+Humphrey.DOM.postEditor = document.getElementById('post-editor');
 Humphrey.DOM.title = document.getElementById('title');
 Humphrey.DOM.textarea = document.getElementById('data');
 Humphrey.DOM.file = document.getElementById('file');
@@ -39,9 +42,22 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 			d.posts.addEventListener('change', Humphrey.updateView);
 			d.button.addEventListener('click', Humphrey.updatePost);
 		});
-	}
+	};
+
+	Humphrey.showEditor = function() {
+		d.postEditor.style.display = 'block';
+	};
+
+	Humphrey.clearValues = function() {
+		d.posts.value = '';
+		d.title.value = '';
+		d.textarea.innerHTML = '';
+		d.file.value = '';
+	};
 
 	Humphrey.updateView = function() {
+
+		Humphrey.showEditor();
 
 		// this refers to the <select> element.
 		Humphrey.SITE.activePost = this.value;
@@ -55,20 +71,20 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 				var file = JSON.parse(data.Body.toString()),
 					date = new Date(file.updated);
 
-				title.value = file.title;
+				d.title.value = file.title;
 				d.textarea.innerHTML = file.content;
 
 				Humphrey.UTILS.notify('Last updated: ' + Humphrey.UTILS.formatDate(date));
 			}
 		});
-	}
+	};
 
 	Humphrey.updatePostJSON = function() {
 
-		var slug = Humphrey.UTILS.slugify(d.title),
-			title = d.title.value,
+		var title = d.title.value,
+			slug = Humphrey.UTILS.slugify(title),
 			content = d.textarea.value,
-			media = d.file.files ? d.file.files[0].name : false;
+			media = d.file.files.length > 0 ? d.file.files[0].name : false;
 
 		// Update data
 		var params = { 
@@ -85,11 +101,11 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		Humphrey.S3.putObject(params, function (err, data) {
 			Humphrey.UTILS.notify(err ? 'DATA ERROR!' : 'DATA SAVED.', true);
 		});
-	}
+	};
 
 	Humphrey.renderPost = function(data) {
 
-	}
+	};
 
 	Humphrey.updatePost = function() {
 		Humphrey.UTILS.notify('');
@@ -118,9 +134,9 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		};
 
 		// Set title
-		header = Humphrey.filterContent(header, filterData);
+		header = Humphrey.filterContent(Humphrey.SITE.activeTheme.files['header.html'], filterData);
 		content = Humphrey.filterContent(content, filterData);
-		footer = Humphrey.filterContent(footer, filterData);
+		footer = Humphrey.filterContent(Humphrey.SITE.activeTheme.files['header.html'], filterData);
 
 		params = {
 			Body: header + content + footer,
@@ -131,6 +147,11 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		Humphrey.S3.putObject(params, function (err, data) {
 			Humphrey.UTILS.notify(err ? 'POST ERROR!' : 'POST SAVED.', true);
 		});
-	}
+	};
+
+	d.addNewButton.addEventListener('click', function(){
+		Humphrey.clearValues();
+		Humphrey.showEditor();
+	});
 
 })(Humphrey.DOM);

@@ -3,7 +3,7 @@ Humphrey.DOM.notifications = document.getElementById('notifications');
 window.noop = function(){};
 
 Humphrey.UTILS.slugify = function(string) {
-	return string.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase().replace(/--+/g, '-')
+	return string.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase().replace(/--+/g, '-');
 };
 
 Humphrey.UTILS.notify = function(message, add) {
@@ -25,7 +25,7 @@ Humphrey.UTILS.formatDate = function(date) {
 	formattedDate = date.getHours() % 12 + ':' + minutes + ' ' + ampm + ', ' + (date.getMonth() + 1) + '/' + date.getDate() + ', ' + date.getFullYear();
 
 	return formattedDate;
-}
+};
 
 Humphrey.UTILS.stripWhiteSpace = function(string) {
 	if (string.slice(0, 1) === ' ') {
@@ -35,4 +35,4 @@ Humphrey.UTILS.stripWhiteSpace = function(string) {
 		return Humphrey.UTILS.stripWhiteSpace(string.slice(0, -1));
 	}
 	return string;
-}
+};

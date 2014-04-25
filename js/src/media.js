@@ -3,14 +3,12 @@ Humphrey.checkIfFileExists = function(file, callback) {
 		Key: 'media/' + file.name
 	}, function(err, data) {
 
-		var newFile = file;
-
 		// file exists
 		if (data) {
 			alert('File already exists. Are you sure you want to overwrite it?');
 		}
 		// console.log(file);
-		callback(newFile);
+		callback(file);
 	});
 };
 
@@ -29,4 +27,4 @@ Humphrey.uploadMedia = function(file) {
 		Body: file,
 		ACL: 'public-read'
 	}, noop);
-}
+};

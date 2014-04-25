@@ -15,20 +15,21 @@ window.loginToGoogle = function(response) {
 		Humphrey.initialize();
 
 	}
-}
+};
 
 Humphrey.hideLoginButton = function(){
 	document.getElementById('login-container').style.display = 'none';
-}
+};
 
 // called on successful login
 Humphrey.initialize = function() {
 
 	Humphrey.getSiteConfig(function(){
+		Humphrey.setSiteConfig();
 		Humphrey.loadThemes();
 		Humphrey.loadPosts();
 	});
-}
+};
 
 Humphrey.getSiteConfig = function(callback) {
 
@@ -41,4 +42,4 @@ Humphrey.getSiteConfig = function(callback) {
 
 		callback();
 	});
-}
+};

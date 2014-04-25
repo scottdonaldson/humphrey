@@ -1,6 +1,6 @@
 Humphrey.loadTemplate = function() {
 	
-}
+};
 
 Humphrey.filterContent = function(content, data) {
 
@@ -24,4 +24,4 @@ Humphrey.filterContent = function(content, data) {
 	});
 
 	return content;
-}
+};

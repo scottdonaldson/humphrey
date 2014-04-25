@@ -27,12 +27,43 @@ module.exports = function(grunt) {
             }
         },
 
+        sass: {
+            dist: {
+                options: {
+                    compass: true,
+                    style: 'compressed'
+                },
+                files: {
+                    'css/foundation.css': 'scss/foundation.scss'
+                }
+            }
+        },
+
+        autoprefixer: {
+            options: {
+                browsers: ['> 1%']
+            },
+            no_dest: {
+                src: ['css/foundation.css']
+            }
+        },
+
         watch: {
+            options: {
+                livereload: true
+            },
             scripts: {
                 files: ['js/**/*.js'],
                 tasks: ['uglify', 'jshint'],
                 options: {
                     spawn: false,
+                }
+            },
+            css: {
+                files: ['sass/*.scss', 'css/foundation.css'],
+                tasks: ['sass', 'autoprefixer'],
+                options: {
+                    spawn: false
                 }
             }
         }
@@ -40,8 +71,10 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['jshint', 'uglify', 'watch']);
+    grunt.registerTask('default', ['jshint', 'uglify', 'sass', 'autoprefixer', 'watch']);
 
 };
