@@ -3,67 +3,103 @@
 
 <head>
 	
-	<link rel="stylesheet" href="css/foundation.css">
+	<link rel="stylesheet" href="css/style.css">
 
 	<title>Site Admin</title>
 </head>
 
 <body>
 
+	<header>
+		<div class="module">
+			<h1>Site Admin</h1>
+		</div>
+	</header>
+
 	<div id="main" class="row">
-		<div class="small-3 columns">
-			<span id="login-container"><span
-				id="login"
-			    class="g-signin"
-			    data-callback="loginToGoogle"
-			    data-cookiepolicy="single_host_origin"
-			    data-requestvisibleactions="http://schemas.google.com/AddActivity"
-			    data-scope="https://www.googleapis.com/auth/plus.login">
-			</span></span>
 
+		<span id="login-container" class="module"><span
+			id="login"
+		    class="g-signin"
+		    data-callback="loginToGoogle"
+		    data-cookiepolicy="single_host_origin"
+		    data-requestvisibleactions="http://schemas.google.com/AddActivity"
+		    data-scope="https://www.googleapis.com/auth/plus.login">
+		</span></span>
+
+		<div class="module">
 			<h3>Site Config:</h3>
+		</div>
 
-			<div id="site">
+		<div id="site" class="row">
 
-				<label for="site-name">Site Name:</label>
-				<input type="text" id="site-name">
+			<div class="third">
+				<div class="module">
+					<label for="site-name">Site Name:</label>
+					<input type="text" id="site-name">
+				</div>
+			</div>
 
-				<label for="themes">Theme:</label>
-				<select id="themes"><option selected disabled></option></select>
+			<div class="third">
+				<div class="module">
+					<label for="themes">Theme:</label>
+					<select id="themes"><option selected disabled></option></select>
+				</div>
+			</div>
 
-				<button id="update-site">Update theme</button>
+			<div class="third last">
+				<div class="module">
+					<label class="dummy">&nbsp;</label>
+					<button id="update-site" class="button button-small">Update theme</button>
+				</div>
 			</div>
 		</div>
 
-		<div class="small-9 columns">
+		<div class="half">
 
 			<div id="post">
-				<div class="row">
-					<div class="small-9 columns">
-						<label for="posts">Select a post:</label>
-						<select id="posts"><option selected disabled></option></select>
+				<div class="module">
+					<div class="row">
+						<div class="fourth three-fourths">
+							<label for="posts">Select a post:</label>
+							<select id="posts"><option selected disabled></option></select>
+						</div>
+						<div class="fourth last">
+							<label class="dummy">&nbsp;</label>
+							<button id="post-add-new" class="button button-small">Add new</button>
+						</div>
 					</div>
-					<div class="small-3 columns">
-						<button id="post-add-new">Add new</button>
-					</div>
-				</div>
 
-				<div id="post-editor" style="display: none;">
-					<label for="title">Title:</label>
-					<input type="text" id="title">
-					<label for="data">Content:</label>
-					<textarea id="data"></textarea>
-					Include media: <input type="file" id="file">
-					<button id="upload-button">Update</button>
+					<div id="post-editor" style="display: none;">
+						<label for="title">Title:</label>
+						<input type="text" id="title">
+
+						<label for="data">Content:</label>
+						<textarea id="data"></textarea>
+
+						<label for="file">Include media:</label>
+						<input type="file" id="file">
+
+						<button id="upload-button" class="button button-small">Update</button>
+					</div>
 				</div>
 			</div>
 
+		</div>
+
+		<div class="fourth last">
+			<p>Media Library</p>
+			<div id="media-library"></div>
+			<label for="add-media">Add new:</label>
+			<input type="file" id="add-media">
+			<button id="add-media-button" class="button button-small">Upload</button>
 		</div>
 	</div><!-- #main .row -->
 
 	<div id="notifications"></div>
 
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc10.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.0-rc.15.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	
 	<script src="js/src/init.js"></script>
 	<script src="js/src/utils.js"></script>

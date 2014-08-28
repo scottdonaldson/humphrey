@@ -1,6 +1,6 @@
-Humphrey.DOM.siteName = document.getElementById('site-name');
-Humphrey.DOM.themes = document.getElementById('themes');
-Humphrey.DOM.updateSiteButton = document.getElementById('update-site');
+Humphrey.DOM.siteName = $('#site-name');
+Humphrey.DOM.themes = $('#themes');
+Humphrey.DOM.updateSiteButton = $('#update-site');
 
 // d is shortcut to Humphrey.DOM
 (function(d){
@@ -16,17 +16,17 @@ Humphrey.DOM.updateSiteButton = document.getElementById('update-site');
 	Humphrey.setSiteName = function() {
 
 		var siteName = !!Humphrey.SITE.siteName ? Humphrey.SITE.siteName : '';
-		d.siteName.value = siteName;
+		d.siteName.val( siteName );
 
 		// set event listener to update site name
-		d.updateSiteButton.addEventListener('click', Humphrey.updateSiteName);
+		d.updateSiteButton.on('click', Humphrey.updateSiteName);
 
 	};
 
 	Humphrey.updateSiteName = function() {
 
 		// update config
-		Humphrey.SITE.siteName = d.siteName.value;
+		Humphrey.SITE.siteName = d.siteName.val();
 
 		var data = JSON.stringify(Humphrey.SITE);
 
@@ -58,14 +58,14 @@ Humphrey.DOM.updateSiteButton = document.getElementById('update-site');
 							afterThemeName = contents.slice(contents.indexOf('Theme Name: ') + 'Theme Name: '.length),
 							themeName = afterThemeName.slice(0, afterThemeName.indexOf('\n'));
 						
-						var option = new Option(themeName, item.Key.replace('admin/themes/', '').replace('/', ''));
-						themes.appendChild(option);
+						var option = $('<option value="' + item.Key.replace('admin/themes/', '').replace('/', '') + '">' + themeName + '</option>');
+						d.themes.append( option );
 					});
 				}
 			});
 
 			Humphrey.setActiveTheme();
-			d.updateSiteButton.addEventListener('click', Humphrey.switchTheme);
+			d.updateSiteButton.on('click', Humphrey.switchTheme);
 		});
 	};
 
@@ -76,8 +76,6 @@ Humphrey.DOM.updateSiteButton = document.getElementById('update-site');
 	};
 
 	Humphrey.loadThemeFile = function(file, i, files, callback) {
-
-		console.log(file);
 
 		Humphrey.S3.getObject({
 			Key: file.Key
@@ -115,9 +113,7 @@ Humphrey.DOM.updateSiteButton = document.getElementById('update-site');
 
 				if (data.Contents[1]) {
 
-					Humphrey.loadThemeFile(data.Contents[1], 1, data.Contents, function(){
-						console.log('finished adding theme files');
-					});
+					Humphrey.loadThemeFile(data.Contents[1], 1, data.Contents, noop);
 				}
 
 				if (callback) callback(Humphrey.activeThemeFiles);

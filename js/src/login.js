@@ -13,12 +13,11 @@ window.loginToGoogle = function(response) {
 		Humphrey.S3 = new AWS.S3({params: {Bucket: Humphrey.BUCKET}});
 
 		Humphrey.initialize();
-
 	}
 };
 
 Humphrey.hideLoginButton = function(){
-	document.getElementById('login-container').style.display = 'none';
+	$('#login-container').hide();
 };
 
 // called on successful login
@@ -28,6 +27,7 @@ Humphrey.initialize = function() {
 		Humphrey.setSiteConfig();
 		Humphrey.loadThemes();
 		Humphrey.loadPosts();
+		// Humphrey.loadMedia();
 	});
 };
 
@@ -38,7 +38,7 @@ Humphrey.getSiteConfig = function(callback) {
 		Key: 'admin/site.json'
 	}, function(err, data) {
 
-		Humphrey.SITE = JSON.parse(data.Body.toString());
+		Humphrey.SITE = JSON.parse( data.Body.toString() );
 
 		callback();
 	});

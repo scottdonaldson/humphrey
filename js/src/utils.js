@@ -28,11 +28,6 @@ Humphrey.UTILS.formatDate = function(date) {
 };
 
 Humphrey.UTILS.stripWhiteSpace = function(string) {
-	if (string.slice(0, 1) === ' ') {
-		return Humphrey.UTILS.stripWhiteSpace(string.slice(1));
-	}
-	if (string.slice(-1) === ' ') {
-		return Humphrey.UTILS.stripWhiteSpace(string.slice(0, -1));
-	}
+	string = string.replace(/(^\s+|\s+$)/g,' ');
 	return string;
 };

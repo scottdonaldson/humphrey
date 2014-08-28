@@ -1,11 +1,11 @@
-Humphrey.DOM.posts = document.getElementById('posts');
-Humphrey.DOM.addNewButton = document.getElementById('post-add-new');
+Humphrey.DOM.posts = $('#posts');
+Humphrey.DOM.addNewButton = $('#post-add-new');
 
-Humphrey.DOM.postEditor = document.getElementById('post-editor');
-Humphrey.DOM.title = document.getElementById('title');
-Humphrey.DOM.textarea = document.getElementById('data');
-Humphrey.DOM.file = document.getElementById('file');
-Humphrey.DOM.button = document.getElementById('upload-button');
+Humphrey.DOM.postEditor = $('#post-editor');
+Humphrey.DOM.title = $('#title');
+Humphrey.DOM.textarea = $('#data');
+Humphrey.DOM.file = $('#file');
+Humphrey.DOM.button = $('#upload-button');
 
 (function(d){
 
@@ -29,30 +29,30 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 					}, function(err, data) {
 						if (err) console.log(err);
 						if (data) {
-							var file = JSON.parse(data.Body.toString()),
+							var file = JSON.parse( data.Body.toString() ),
 								slug = key.replace(/^posts\/|.json$/g, ''),
-								option = new Option(file.title, slug);
+								option = $('<option value="' + slug + '">' + file.title + '</option>');
 
-							d.posts.appendChild(option);
+							d.posts.append( option );
 						}
 					});
 				}
 			});
 
-			d.posts.addEventListener('change', Humphrey.updateView);
-			d.button.addEventListener('click', Humphrey.updatePost);
+			d.posts.on('change', Humphrey.updateView);
+			d.button.on('click', Humphrey.updatePost);
 		});
 	};
 
 	Humphrey.showEditor = function() {
-		d.postEditor.style.display = 'block';
+		d.postEditor.show();
 	};
 
 	Humphrey.clearValues = function() {
-		d.posts.value = '';
-		d.title.value = '';
-		d.textarea.innerHTML = '';
-		d.file.value = '';
+		d.posts.val('');
+		d.title.val('');
+		d.textarea.html('');
+		d.file.val('');
 	};
 
 	Humphrey.updateView = function() {
@@ -71,8 +71,8 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 				var file = JSON.parse(data.Body.toString()),
 					date = new Date(file.updated);
 
-				d.title.value = file.title;
-				d.textarea.innerHTML = file.content;
+				d.title.val(file.title);
+				d.textarea.html(file.content);
 
 				Humphrey.UTILS.notify('Last updated: ' + Humphrey.UTILS.formatDate(date));
 			}
@@ -81,10 +81,10 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 
 	Humphrey.updatePostJSON = function() {
 
-		var title = d.title.value,
+		var title = d.title.val(),
 			slug = Humphrey.UTILS.slugify(title),
-			content = d.textarea.value,
-			media = d.file.files.length > 0 ? d.file.files[0].name : false;
+			content = d.textarea.val(),
+			media = d.file.files ? d.file.files[0].name : false;
 
 		// Update data
 		var params = { 
@@ -110,12 +110,12 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 	Humphrey.updatePost = function() {
 		Humphrey.UTILS.notify('');
 
-		var content = d.textarea.value;
+		var content = d.textarea.val();
 
 		// If there is no ACTIVE_KEY, assume we are creating a new post
 		var slug = 
 			!Humphrey.SITE.activePost ? 
-				Humphrey.UTILS.slugify(d.title.value) : 
+				Humphrey.UTILS.slugify(d.title.val()) : 
 				Humphrey.SITE.activePost;
 
 		var file = d.file.files ? d.file.files[0] : false;
@@ -129,7 +129,7 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 			footer = Humphrey.SITE.activeThemeFooter;
 
 		var filterData = { 
-			title: title.value,
+			title: d.title.val(),
 			date: Humphrey.UTILS.formatDate(new Date())
 		};
 
@@ -149,7 +149,7 @@ Humphrey.DOM.button = document.getElementById('upload-button');
 		});
 	};
 
-	d.addNewButton.addEventListener('click', function(){
+	d.addNewButton.on('click', function(){
 		Humphrey.clearValues();
 		Humphrey.showEditor();
 	});

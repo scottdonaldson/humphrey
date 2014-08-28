@@ -1,0 +1,173 @@
+// ----- Breakpoints for responsive styles
+$break_large: 1200px;
+$break_medium: 1000px;
+$break_small: 800px;
+$break_small_very: 600px;
+$break_tiny: 480px;
+
+$full_width: 1060px;
+
+.full-width {
+	margin: 0 auto;
+	max-width: $full_width;
+	padding-left: 5%;
+	padding-right: 5%;
+
+	.lt-ie9 & {
+		max-width: none;
+		width: $break_medium;
+	}
+}
+
+// Cribbed from Chris Coyier/CSS-Tricks: http://css-tricks.com/spacing-the-bottom-of-modules/
+@mixin normalize {
+	& > *:first-child,
+	& > *:first-child > *:first-child,
+	& > *:first-child > *:first-child > *:first-child {
+		margin-top: 0 !important;
+	}
+	& > *:last-child,
+	& > *:last-child > *:last-child,
+	& > *:last-child > *:last-child > *:last-child {
+		margin-bottom: 0 !important;
+	}
+}
+
+.row {
+	@include clearfix;
+	@include normalize;
+	margin-bottom: 2em;
+	
+	@media screen and (max-width: $break_medium) {
+		margin-bottom: 1.5em;
+	}
+	@media screen and (max-width: $break_small) {
+		margin-bottom: 1em;
+	}
+}
+
+.module {
+	padding: 1em 2.5em;
+	@include normalize;
+
+	@media screen and (max-width: $break_medium) {
+		padding: 0.75em 2em;
+	}
+	@media screen and (max-width: $break_small) {
+		padding: 0.5em 1em;
+	}
+
+	&.module-tight {
+		padding: 1.2em;
+
+		@media screen and (max-width: $break_medium) {
+			padding: 0.8em;
+		}
+		@media screen and (max-width: $break_small) {
+			padding: 0.6em;
+		}
+	}
+}
+
+.section {
+	padding-top: 2em;
+	padding-bottom: 2em;
+
+	@media screen and (max-width: $break_medium) {
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+	}
+	@media screen and (max-width: $break_small) {
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+}
+
+.half,
+.third,
+.fourth {
+	float: left;
+	margin-right: 5%;
+	.csscalc & {
+		margin-right: 20px;
+	}
+
+	&.first {
+		margin-left: 0;
+	}
+
+	&.last {
+		margin-right: 0; 
+	}
+
+	// for floating media only
+	&.alignright,
+	&.alignleft {
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.half {
+	width: 47.5%;
+	.csscalc & {
+		width: calc(50% - 10px);
+	}
+
+	@media screen and (max-width: $break_small) {
+		&,
+		.csscalc & {
+			margin: 0 0 1em;
+			width: 100%;
+		}
+	}
+}
+
+.third {
+	width: 30%;
+	.csscalc & {
+		width: calc(33.333% - 13.333px);
+	}
+
+	&.two-thirds {
+		width: 65%;
+		.csscalc & {
+			width: calc(66.667% - 6.667px);
+		}
+	}
+
+	@media screen and (max-width: $break_small) {
+		&,
+		&.two-thirds,
+		.csscalc &,
+		.csscalc &.two-thirds {
+			margin: 0 0 1em;
+			width: 100%;
+		}
+	}
+}
+
+.fourth {
+	width: 21.25%;
+	.csscalc & {
+		width: calc(25% - 15px);
+	}
+
+	&.three-fourths {
+		width: 65%;
+		.csscalc & {
+			width: calc(75% - 5px);
+		}
+	}
+
+	@media screen and (max-width: $break_small) {
+		&,
+		&.three-fourths,
+		.csscalc &,
+		.csscalc &.three-fourths {
+			margin: 0 0 1em;
+			width: 100%;
+		}
+	}
+}

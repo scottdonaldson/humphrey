@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'css/foundation.css': 'scss/foundation.scss'
+                    'css/style.css': 'scss/style.scss'
                 }
             }
         },
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 browsers: ['> 1%']
             },
             no_dest: {
-                src: ['css/foundation.css']
+                src: ['css/style.css']
             }
         },
 
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                 }
             },
             css: {
-                files: ['sass/*.scss', 'css/foundation.css'],
+                files: ['scss/*.scss', 'css/style.css'],
                 tasks: ['sass', 'autoprefixer'],
                 options: {
                     spawn: false

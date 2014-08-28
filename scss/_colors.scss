@@ -1,0 +1,34 @@
+$default: #333;
+
+$grey_light: #ddd;
+.grey-light { color: $grey_light; }
+.bg-grey-light { background-color: $grey_light; }
+
+$grey_lightish: #aaa;
+.grey-lightish { color: $grey_lightish; }
+.bg-grey-lightish { background-color: $grey_lightish; }
+
+$grey_medium: #999;
+.grey-medium { color: $grey_medium; }
+.bg-grey-medium { background-color: $grey_medium; }
+
+$grey_mediumdark: #666;
+.grey-mediumdark { color: $grey_mediumdark; }
+.bg-grey-mediumdark { background-color: $grey_mediumdark; }
+
+$grey_dark: #0F2446;
+.grey-dark { color: $grey-dark; }
+.bg-grey-dark { background-color: $grey-dark; }
+
+$accent: #0045ad;
+$accent_highlight: #00aff3;
+
+$secondary: #fd0;
+$secondary_highlight: #fec119;
+
+.white { color: #fff; }
+.bg-white { background: #fff; }
+
+$bubble_dark: #0095f5;
+$bubble_medium: #00a7f7;
+$bubble_light: #00bbf8;
